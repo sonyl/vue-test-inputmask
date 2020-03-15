@@ -2,12 +2,14 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <input type="text" v-model="value" v-mask="options" maxlength="42">
-    <div>{{ value }}</div>
+    <div>{{ iban }}</div>
   </div>
 </template  >
 
 <script>
 import Inputmask from 'inputmask';
+
+const PLACEHOLDER='_';
 
 export default {
   name: 'HelloWorld',
@@ -34,8 +36,13 @@ export default {
               validator: "[0-9A-Za-z]"
             }
         },
-        placeholder: "_",
+        placeholder: PLACEHOLDER,
       }
+    }
+  },
+  computed: {
+    iban: function() {
+      return (this.value || '').replace(new RegExp(PLACEHOLDER+'|'+' ', 'g'), '');
     }
   }
 }
